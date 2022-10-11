@@ -128,10 +128,14 @@ func GeneratePutBucketLoggingInput(name string, config *v1beta1.LoggingConfigura
 		Bucket: awsclient.String(name),
 		BucketLoggingStatus: &types.BucketLoggingStatus{LoggingEnabled: &types.LoggingEnabled{
 			TargetBucket: config.TargetBucket,
-			TargetGrants: make([]types.TargetGrant, 0),
 			TargetPrefix: awsclient.String(config.TargetPrefix),
 		}},
 	}
+
+	if len(config.TargetGrants) > 0 {
+		bci.BucketLoggingStatus.LoggingEnabled.TargetGrants = make([]types.TargetGrant, 0)
+	}
+
 	for _, grant := range config.TargetGrants {
 		bci.BucketLoggingStatus.LoggingEnabled.TargetGrants = append(bci.BucketLoggingStatus.LoggingEnabled.TargetGrants, types.TargetGrant{
 			Grantee: &types.Grantee{

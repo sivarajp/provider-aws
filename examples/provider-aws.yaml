@@ -1,0 +1,26 @@
+
+---
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: aws-controller
+  labels:
+    app: provider-aws-controller-amd64
+spec:
+  image: buyerquest.azurecr.io/provider-aws-controller-amd64:v0.31.0
+  imagePullPolicy: Always
+  imagePullSecrets:
+    - name: acr-registry
+  args: ["-d"]
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: aws-provider
+spec:
+  package: buyerquest.azurecr.io/provider-aws-amd64:v0.31.0
+  packagePullPolicy: Always
+  packagePullSecrets:
+    - name: acr-registry
+  controllerConfigRef:
+    name: aws-controller

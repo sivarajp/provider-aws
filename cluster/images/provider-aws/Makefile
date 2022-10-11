@@ -8,7 +8,7 @@ include ../../../build/makelib/common.mk
 #  Options
 DOCKER_REGISTRY ?= crossplane
 IMAGE = $(BUILD_REGISTRY)/provider-aws-$(ARCH)
-OSBASEIMAGE = scratch
+OSBASEIMAGE = gcr.io/distroless/static
 include ../../../build/makelib/image.mk
 
 # ====================================================================================
